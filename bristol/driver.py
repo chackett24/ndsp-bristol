@@ -3,8 +3,9 @@ import asyncio
 from telnetlib import Telnet
 import time
 import serial
-#from highfinesse import wlm_constants as wlm
-#from enum import IntEnum
+
+# from highfinesse import wlm_constants as wlm
+# from enum import IntEnum
 try:  # permits running in simulation mode on linux
     from ctypes import windll, c_double, c_ushort, c_long, c_bool, byref, c_short
     from ctypes import c_char_p, create_string_buffer, pointer
@@ -13,15 +14,17 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
+
 class WMException(Exception):
     """ Raised on errors involving the WLM interface library (windata.dll) """
+
     def __init__(self, value):
         s = 'WMException: {}'.format(value)
         logger.warning(s)
 
 
 class Bristol:
-    def __init__(self, simulation = False):
+    def __init__(self, simulation=False):
         self.simulation = simulation
         if self.simulation:
             logger.info('simulation mode active')
@@ -35,9 +38,8 @@ class Bristol:
             print(self.ser)
             self.ser.open()
 
-
     async def _ser_send(self, cmd, get_response=True):
-        #Send a string to the serial port.
+        # Send a string to the serial port.
 
         # Low-level routine for sending serial commands to device. It sends
         # strings and listens for a response terminated by a carriage return.
@@ -84,7 +86,6 @@ class Bristol:
         if self.simulation:
             return 25.0
 
-
         freq = await self._ser_send(":MEAS:FREQ?")
 
         if freq < 0:
@@ -121,7 +122,4 @@ class Bristol:
             return 0
 
     async def reset(self):
-        self._ser_send("*RST", get_response= False)
-
-
-
+        await self._ser_send("*RST", get_response=False)
