@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 def get_argparser():
     parser = argparse.ArgumentParser(
         description="ARTIQ controller for the Britton Lab Bristol wavemeter")
-    common_args.simple_network_args(parser, 3260)
+    common_args.simple_network_args(parser, 3276)
     parser.add_argument(
         "--simulation", action="store_true",
         help="Put the driver in simulation mode, even if --device is used.")

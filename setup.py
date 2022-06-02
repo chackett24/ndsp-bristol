@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="bristol",
-    install_requires=["sipyco"],
+    install_requires=["sipyco", "serial"],
     packages=find_packages(),
     entry_points={
         "console_scripts": [
